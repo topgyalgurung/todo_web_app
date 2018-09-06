@@ -7,6 +7,7 @@ from flask import g
 
 app = Flask(__name__)
 
+app.secret_key="secret"
 app.database="database.db"
 
 def connect_db():
@@ -22,19 +23,17 @@ def login():
 		
 @app.route('/logout')
 def logout():
+	session.pop('logged_in',None)
 	flash('Logged out')
 	return render_template("index.html")	
 	
 @app.route("/newuser")
 def newuser():
-	#return render_template("newuser.html")
 	return render_template('newuser.html')
 
 # to do list
-@app.route('/todo')
-#def todo():
-		#return render_template('todo.html')
-def item():
+@app.route('/todo',methods=['GET','POST'])
+def todo():
 	g.db = connect_db()
 	if request.method == 'POST':
 		if 'new' in request.form:
@@ -80,14 +79,31 @@ def item():
 def create():		
 	return render_template("newuser.html")
 	
-@app.route('/register')
+@app.route('/register', methods=['GET','POST'])
 def register():
-	#return redirect(url_for('index'))
-	flash('Now log in')
-	return render_template("home.html")
+	if request.method == 'POST':
+		error = None
+		g.db = connect_db()
+		if 'create' in request.form:
+			newUser = request.form['create']
+			cur = g.db.execute("SELECT rowid FROM users WHERE Name = ?", (newUser,))
+			data = cur.fetchone()
+			if data is None and len(newUser) > 0: 
+				''' Insert new item'''
+				cur = g.db.execute('INSERT into users (Name) VALUES (?)', (newUser,))
+				g.db.commit()	
+				g.db.close()
+				error = "Account created"
+				return redirect(url_for('index'))
+			else:
+				error = 'Username not available'
+				return render_template('index.html',error=error)
+		else:
+			return render_template('index.html')
+	else:
+		return render_template('index.html')
+	#flash('Now log in')
+	#return render_template("home.html")
 
-
-
-	
 if __name__=='__main__':
 	app.run(debug=True)
