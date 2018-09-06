@@ -1,0 +1,58 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>To-do web app</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+	<script src="main.js"></script>
+</head>
+<body>
+<center>
+ <table border = 1 align="center">
+	<h1>TO DO LIST </h1>
+	
+	{% for post in posts %}
+						<tr>
+							<th> <center>List</center> </th>
+							<th> <center>Note</center> </th>
+						</tr>
+
+						<tr>
+							 <td> <center>{{ post.List }}</center> </td>
+							 <td> <center>{{ post.Note }}</center> </td>
+						</tr>
+
+					{% endfor %}
+	</table>
+	
+	<br>
+	
+	<div> Add new item:
+		<form action="" method="post" style="text-align:center;">
+						<input type="text" placeholder="New item" name="new" value="{{ request.form.new_item }}">
+						<input class="btn btn-default" type="submit" value="Add">
+					</form> </div>
+<br>
+	<div> Delete item:
+	 <form action="" method="post" style="text-align:center;">
+					<input type="text" placeholder="Delete item" name="delete" value="{{ request.form.delete_item }}">
+					<input class="btn btn-default" type="submit" value="Delete">
+				</form> </div>
+<br>
+<div> Mark done:
+	<form action="" method="post" style="text-align:center;">
+					<input type="text" placeholder="Item" name="mark" value="{{ request.form.mark_item }}">
+					<input class="btn btn-default" type="submit" value="Mark">
+				</form> </div>
+	
+	<br>
+</center>
+
+
+<center> <p> Press <a href="/logout"> here </a> to log out</p></center>
+
+	 
+</body>
+</html>
