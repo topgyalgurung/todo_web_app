@@ -102,8 +102,6 @@ def register():
 			return render_template('index.html')
 	else:
 		return render_template('index.html')
-	#flash('Now log in')
-	#return render_template("home.html")
 
 if __name__=='__main__':
 	app.run(debug=True)
