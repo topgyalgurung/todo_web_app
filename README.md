@@ -1,4 +1,4 @@
-# csci-395 project 1:  TO DO web app
+# CSCI 395 project 1:  TO DO web app
 
     Name: Topgyal Gurung 
     Project 1- To Do Web APP
