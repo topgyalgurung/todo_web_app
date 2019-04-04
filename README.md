@@ -8,5 +8,5 @@ basic webframework (flask python)
 
 basic html, http, sql using sqlite, basic session and cookies
 
-    $cd csci-395_p1
-    $flask run
+    $ cd csci-395_p1
+    $ flask run
